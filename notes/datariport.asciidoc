@@ -91,3 +91,30 @@ and 70,489 play records (35.24%).
 Purchase records are more frequent than play records,
 suggesting that not every recorded game ownership
 interaction has a corresponding playtime record.
+
+
+=== Understanding User-Game Records
+
+I selected the records of the first user using
+the `user_id` column to examine how purchase
+and play interactions are represented.
+
+The purpose was to understand the relationship
+between users, games, and behavior types before
+creating the user-level dataset for clustering.
+
+I used the `df["user_id"].iloc[0]` command to select
+the first user and filtered the dataset using their ID.
+
+I then used the `.head(12)` command to display only
+the first 12 records belonging to this user.
+
+The selected records contain 6 different games,
+each having both a purchase and a play record.
+
+This demonstrates how game ownership and playtime
+are represented separately in the dataset.
+
+However, since only the first 12 records were
+examined, these observations cannot be generalized
+to the user's entire game library or to other users.

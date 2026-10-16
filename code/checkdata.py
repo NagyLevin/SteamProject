@@ -1,24 +1,56 @@
 
 import pandas as pd
 
-df = pd.read_csv( #read csv file
-    "data/raw/steam-200k.csv",
-    header=None,
-    names=["user_id", "game_name", "behavior", "value", "extra"] #gve names to the colums
-)
+def main():
+    df = pd.read_csv( #read csv file
+        "data/raw/steam-200k.csv",
+        header=None,
+        names=["user_id", "game_name", "behavior", "value", "extra"] #gve names to the colums
+    )
 
-#print(df.head()) #show data content
+    #print(df.head()) #show data content
 
-#print(df.shape) #show dimensions of data
+    #print(df.shape) #show dimensions of data
 
-#print(df.info()) #show data stats
+    #print(df.info()) #show data stats
 
-#print(df.dtypes) # show data types
+    #print(df.dtypes) # show data types
 
-#print(df.describe()) #show data statiscitc
+    #print(df.describe()) #show data statiscitc
 
-#print(df["user_id"].nunique()) #how many unique users are there
+    #print(df["user_id"].nunique()) #how many unique users are there
 
-#print(df["game_name"].nunique()) #how many games
+    #print(df["game_name"].nunique()) #how many games
 
-#print(df["behavior"].value_counts())
+    #print(df["behavior"].value_counts())
+
+    first_user = df["user_id"].iloc[0] #firstuserdata
+    get_users_games(df, first_user, 12)
+
+def get_users_games(
+        df: pd.DataFrame,
+        user_id: int,
+        record_head: int = 12
+    ) -> None:
+        user_records = df[df["user_id"] == user_id]
+
+        if user_records.empty:
+            print(f"User {user_id} not found.")
+            return
+
+        print(
+            user_records[["user_id", "game_name", "behavior", "value"]]
+            .head(record_head)
+            .to_string(index=False)
+        )
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+

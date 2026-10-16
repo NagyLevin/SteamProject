@@ -1,0 +1,14 @@
+
+=== 1. Introduction / Problem Definition
+
+My idea for the aim of this project is to investigate whether Steam users can be divided into distinct player segments based on their game ownership and recorded playtime behavior.
+
+Steam users may exhibit different gaming habits. Some users have large game libraries but spend relatively little time playing, while others concentrate many hours on a small number of games. Identifying these behavioral patterns could provide useful insights into player engagement and preferences.
+
+The main research question is: *Can Steam users be grouped into distinct segments based on their game ownership and recorded playtime behavior?*
+
+This project is defined as an clustering problem, since the dataset does not contain predefined player categories or target labels.
+
+The analysis will initially consider features such as the number of games owned, the number of games played, total playtime, average playtime, maximum playtime, and the proportion of owned games that have been played.
+
+The findings will be interpreted with consideration of the dataset's age and limitations in its documented collection process.

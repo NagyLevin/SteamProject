@@ -1,0 +1,86 @@
+
+=== Dataset Structure
+
+I used *df.shape* command to check the dimensions of the data.
+The original dataset contains 200,000 rows and 5 columns. Each row represents a user-game interaction, such as a game ownership record or recorded playtime. Multiple rows may belong to the same user and game.
+
+
+=== Dataset Information
+I used the `df.info()` command to examine the data types, non-null values, and memory usage of the dataset.
+
+All five columns contain 200,000 non-null values, indicating that no missing values were detected at this stage. The dataset uses approximately 7.6 MB of memory.
+
+
+=== Column Data Types
+
+I used the `df.dtypes` command to separately verify the data types of each column and confirm that numerical and textual variables were correctly recognized.
+
+
+=== Descriptive Statistics
+
+I used the `df.describe()` command to examine the basic
+statistical properties of the numerical columns.
+
+The `value` column has a mean of 17.87, a median of 1.0,
+and a maximum of 11,754. These differences suggest that
+the values have a highly uneven distribution.
+
+However, the `value` column contains both purchase
+indicators and playtime records. Therefore, these
+statistics cannot directly represent player playtime.
+The two behavior types must be analyzed separately.
+
+The `extra` column contains only zeros, indicating
+that it provides no useful information for the analysis.
+It can be removed during data preprocessing.
+
+The `user_id` column is an identifier, so its numerical
+statistics are not meaningful for behavioral analysis.
+
+
+=== Number of Unique Users
+
+I used the `df["user_id"].nunique()` command to count
+the number of distinct Steam users in the dataset.
+
+The dataset contains 12,393 unique users across
+200,000 interaction records.
+
+This is important because the clustering analysis
+will be performed at the user level, where each
+user should be represented by a single row.
+
+
+=== Number of Unique Games
+
+I used the `df["game_name"].nunique()` command to
+count the number of distinct game names in the dataset.
+
+This helps us understand the variety of games
+represented in the data and provides a basis for
+calculating user-level features, such as the
+number of games owned and played.
+
+The dataset contains 5,155 unique game names
+across 200,000 interaction records.
+
+This indicates that the dataset covers a wide
+variety of games, which will allow us to analyze
+differences in users' game libraries and playtime.
+
+
+=== Behavior Distribution
+
+I used the `df["behavior"].value_counts()`
+command to count the frequency of each user
+interaction type.
+
+The purpose of this analysis is to determine
+how many records represent game ownership
+(`purchase`) and how many contain recorded
+playtime (`play`).
+
+This distinction is important because the
+two behavior types contain different information
+and must be processed separately when creating
+user-level features for clustering.

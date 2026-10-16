@@ -84,3 +84,10 @@ This distinction is important because the
 two behavior types contain different information
 and must be processed separately when creating
 user-level features for clustering.
+
+The dataset contains 129,511 purchase records (64.76%)
+and 70,489 play records (35.24%).
+
+Purchase records are more frequent than play records,
+suggesting that not every recorded game ownership
+interaction has a corresponding playtime record.

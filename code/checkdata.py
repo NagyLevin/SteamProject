@@ -21,4 +21,4 @@ df = pd.read_csv( #read csv file
 
 #print(df["game_name"].nunique()) #how many games
 
-print(df["behavior"].value_counts())
+#print(df["behavior"].value_counts())

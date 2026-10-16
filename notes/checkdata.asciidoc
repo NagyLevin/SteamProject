@@ -118,3 +118,77 @@ are represented separately in the dataset.
 However, since only the first 12 records were
 examined, these observations cannot be generalized
 to the user's entire game library or to other users.
+
+
+
+=== Summary of Initial Data Understanding
+
+During the initial data exploration, I used Pandas commands
+such as `df.head()`, `df.shape`, `df.info()`, `df.dtypes`,
+`df.describe()`, `nunique()`, and `value_counts()` to
+understand the structure and characteristics of the dataset.
+
+The following table summarizes the main findings:
+
+[cols="2,2", options="header"]
+|===
+|Property |Result
+
+|Total records
+|200,000
+
+|Total columns
+|5
+
+|Unique users
+|12,393
+
+|Unique games
+|5,155
+
+|Purchase records
+|129,511
+
+|Play records
+|70,489
+
+|Missing values
+|None detected
+
+|Extra column
+|Contains only zeros
+|===
+
+==== Key Findings
+
+The dataset contains 200,000 interaction records belonging
+to 12,393 unique Steam users and covering 5,155 different games.
+
+The records are divided into two behavior types:
+129,511 purchase records and 70,489 play records.
+
+Purchase records represent approximately 64.76% of the dataset,
+while play records account for approximately 35.24%.
+
+No missing values were detected in any of the five columns.
+Additionally, the `extra` column contains only zeros and
+does not provide useful information for the analysis.
+
+The most important finding is that the original dataset
+is organized at the user-game interaction level rather than
+the user level. A single user can appear in multiple rows,
+and the same game may have separate purchase and play records.
+
+Since the objective of this project is to identify different
+types of Steam players through clustering, the dataset must
+be transformed into a user-level dataset, where each user
+is represented by a single row.
+
+This transformation will require feature engineering to
+calculate user-level characteristics such as the number
+of owned games, the number of played games, total playtime,
+average playtime, maximum playtime, and play ratio.
+
+These findings provide the foundation for the next stages:
+data quality assessment, preprocessing, and exploratory
+data analysis.

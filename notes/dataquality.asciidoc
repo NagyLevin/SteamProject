@@ -1,0 +1,24 @@
+
+= Data Quality Assessment
+
+== Missing Values
+
+I created the `get_missing_values()` function to examine
+the number and percentage of missing values in each column.
+
+The function uses `df.isna().sum()` to count missing values
+and `df.isna().mean() * 100` to calculate their percentages.
+
+=== Results
+
+All five columns contain 0 missing values (0.0%).
+
+=== Interpretation
+
+No missing values were detected in the original dataset.
+Therefore, no missing value imputation or row removal
+is required at this stage.
+
+However, the absence of missing cells does not guarantee
+that every purchase record has a corresponding play record.
+This relationship will be examined separately.

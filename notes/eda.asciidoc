@@ -108,3 +108,255 @@ Only 245 users (2.0%) owned more than 100 games.
 
 These findings confirm that the distribution
 of purchased games is strongly right-skewed.
+
+image::figures/games_purchased_groups.png[width=650]
+
+== Total Playtime Distribution
+
+To investigate differences in gaming activity,
+I analyzed the distribution of the
+`total_playtime` feature.
+
+Users were divided into categories based on
+their total recorded playtime, ranging from
+zero hours to more than 1,000 hours.
+
+This analysis aims to identify differences
+in recorded player activity and investigate
+the previously observed right-skewed
+distribution of total playtime.
+
+The distribution analysis included all 12,393 users.
+
+The results showed that 1,043 users (8.4%) had
+zero recorded playtime.
+
+A total of 5,814 users (46.9%) had no more
+than 10 hours of recorded playtime.
+
+Furthermore, 8,776 users (70.8%) had no more
+than 100 hours of recorded playtime.
+
+However, 1,020 users (8.2%) had more than
+1,000 hours of recorded playtime.
+
+These findings indicate that total playtime
+is strongly right-skewed.
+
+A large proportion of users have relatively
+low recorded playtime, while a smaller group
+shows substantially higher gaming activity.
+
+This pattern is consistent with the descriptive
+statistics, where the mean total playtime was
+278.01 hours, compared to a median of 13.5 hours.
+
+== Implications for Clustering
+
+The substantial differences in recorded playtime
+suggest that this feature may be useful for
+distinguishing different levels of player activity.
+
+.Total Playtime Distribution
+image::figures/total_playtime_groups.png[width=650]
+
+== Relationship Between Game Ownership and Playtime
+
+To investigate the relationship between game
+ownership and recorded playtime, I grouped users
+based on the number of games they purchased.
+
+I used the Pandas `pd.cut()` function to divide
+users into nine game ownership categories.
+
+Then, I applied `groupby()` and `agg()` to calculate
+the number of users, mean total playtime, and
+median total playtime for each category.
+
+=== Results
+
+[cols="2,1,1,1",options="header"]
+|===
+|Games Purchased |Users |Mean Playtime (Hours) |Median Playtime (Hours)
+
+|1 |5700 |66.17 |2.70
+|2 |1476 |139.73 |9.40
+|3 |827 |163.18 |20.20
+|4-5 |1036 |179.45 |28.85
+|6-10 |1336 |325.86 |58.25
+|11-20 |810 |572.91 |240.20
+|21-50 |687 |959.76 |595.70
+|51-100 |276 |1490.38 |1194.95
+|101+ |245 |2330.63 |1860.50
+|===
+
+The results show a clear positive association
+between the number of games purchased and
+total recorded playtime.
+
+Users who own only one game have a median
+total playtime of 2.70 hours.
+
+In comparison, users who own between 21 and
+50 games have a median playtime of 595.70 hours,
+while users owning more than 100 games have
+a median playtime of 1,860.50 hours.
+
+Both mean and median playtime increase across
+all game ownership categories.
+
+Additionally, the mean is higher than the
+median in every category, suggesting the
+presence of right-skewed playtime distributions
+within the groups.
+
+The findings suggest that game ownership and
+total playtime capture related aspects of
+user engagement.
+
+Both features may help distinguish users with
+different gaming behavior patterns.
+
+== Correlation Analysis
+The purpose of correlation analysis is to
+investigate the relationships between the six
+numerical behavioral features.
+
+Understanding these relationships is important
+because strongly correlated features may
+represent overlapping aspects of user behavior.
+
+This can influence the results of distance-based
+clustering algorithms such as K-Means.
+
+I excluded the `user_id` column because it
+represents a user identifier rather than
+a behavioral characteristic.
+
+I used the Pandas `corr()` method to calculate
+a correlation matrix containing all six
+behavioral features.
+
+The Spearman correlation method was selected
+because the earlier exploratory analysis
+identified strongly right-skewed distributions
+and extreme values.
+
+Spearman correlation measures the strength and
+direction of monotonic relationships based on
+ranked observations.
+
+Its values range from -1 to +1.
+
+A value close to +1 indicates a strong positive
+monotonic relationship, while a value close to
+-1 indicates a strong negative monotonic
+relationship.
+
+Values close to zero indicate a weak monotonic
+relationship.
+
+=== Correlation Analysis Results
+
+The Spearman correlation analysis revealed several
+strong relationships between the behavioral features.
+
+The strongest positive correlation was observed
+between `total_playtime` and `max_playtime` (0.99).
+
+Similarly, `avg_playtime` showed strong positive
+correlations with both `max_playtime` (0.97) and
+`total_playtime` (0.94).
+
+These results suggest that the three playtime-related
+features contain substantially overlapping information.
+
+One possible explanation is that many users
+concentrate their recorded playtime on a small
+number of games.
+
+The number of purchased and played games also
+showed a strong positive correlation (0.76).
+
+Furthermore, `games_played` and `total_playtime`
+had a positive correlation of 0.72, suggesting
+that users who play more distinct games generally
+have higher total recorded playtime.
+
+A negative correlation of -0.60 was observed
+between `games_purchased` and `play_ratio`.
+
+This suggests that users with larger recorded
+game libraries tend to have a lower proportion
+of games with recorded playtime.
+
+The high correlations between the playtime-related
+features suggest potential redundancy.
+
+Using several strongly related features may
+increase the influence of similar behavioral
+information in distance-based clustering.
+
+Therefore, different feature combinations should
+be considered during the later clustering stage.
+
+For example, a model using all six features
+could be compared against a model using a
+reduced feature set.
+
+== Correlation Heatmap
+
+To visualize the relationships between the six
+behavioral features, I created a correlation
+heatmap using Matplotlib.
+
+The heatmap displays the Spearman correlation
+coefficients calculated in the previous analysis.
+
+The color scale ranges from -1 to +1,
+representing negative and positive correlations.
+
+The numerical correlation values are displayed
+inside the individual cells to support
+interpretation.
+
+The visualization highlights the strong
+relationships between the playtime-related
+features.
+
+.Spearman Correlation Heatmap
+image::figures/spearman_correlation_heatmap.png[width=650]
+
+=== Interpretation of Correlation Results
+
+The Spearman correlation analysis revealed several
+important relationships between the behavioral features.
+
+==== Total Playtime and Maximum Playtime
+
+The strongest positive correlation was observed
+between `total_playtime` and `max_playtime` (0.99).
+
+This indicates that users with higher total recorded
+playtime generally also rank higher in terms of
+their maximum playtime in a single game.
+
+==== Games Purchased and Games Played
+
+A strong positive correlation of 0.76 was observed
+between `games_purchased` and `games_played`.
+
+This indicates that users who own more games
+generally also play a larger number of distinct games.
+
+This relationship is consistent with the earlier
+exploratory analysis
+
+==== Games Purchased and Play Ratio
+
+A negative correlation of -0.60 was observed
+between `games_purchased` and `play_ratio`.
+
+This indicates that users with larger recorded
+game libraries generally have a lower proportion
+of games with recorded playtime.

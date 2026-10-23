@@ -1,0 +1,13 @@
+= Data Cleaning
+
+== Removing the Extra Column
+
+Based on the Data Quality Assessment, I decided to
+remove the `extra` column because all 200,000 values
+were zero.
+
+I created the `remove_extra_column()` function using
+the `drop()` method to remove this unnecessary column.
+
+The `.copy()` method was used to create a separate
+DataFrame, preserving the original dataset.

@@ -58,6 +58,13 @@ def main():
     for metric, value in relationship_summary.items():
         print(f"{metric}: {value}")
 
+     # Validate the extra column
+    extra_summary = find_extra_column(df)
+
+    for metric, value in extra_summary.items():
+        print(f"{metric}: {value}")
+
+
 
 def get_purchase_play_relationships(df: pd.DataFrame) -> dict:
 
@@ -88,6 +95,16 @@ def get_purchase_play_relationships(df: pd.DataFrame) -> dict:
             "Play only": len(play_only)
         }
 
+def find_extra_column(df: pd.DataFrame) -> dict:
+    extra_col = df["extra"] #last coloum called extra
+    print("--- Extra Column Validation ---")
+
+    return {
+        "Unique values": extra_col.nunique(dropna=False), #finds unique values and missing values
+        "Value distribution": extra_col.value_counts(dropna=False).to_dict(), 
+        "Missing values": int(extra_col.isna().sum()),
+        "All values are zero": bool(extra_col.eq(0).all())
+    }
 
 def value_check(df: pd.DataFrame) -> dict:
     print("---Value Quality Assessment---")

@@ -189,3 +189,58 @@ purchase records.
 
 No additional cleaning is required based on
 the purchase-play relationship validation.
+
+== Extra Column Validation
+
+I created the `find_extra_column()` function
+to examine the contents of the `extra` column.
+
+I used `nunique()` and `value_counts()` to identify
+the number and frequency of unique values.
+
+I also checked whether the column contained
+missing values and whether all values were zero.
+
+All values are 0, therefore the coloum can be deleted.
+
+== Data Quality Assessment Summary
+
+After completing the data quality assessment, I identified
+several issues that should be addressed before performing
+feature engineering and clustering.
+
+The analysis confirmed that the dataset contains no missing
+values, invalid behavior categories, negative playtime values,
+or zero playtime values.
+
+However, three issues require preprocessing:
+
+The analysis identified 707 fully duplicated records,
+representing approximately 0.35% of the dataset.
+I decided to remove these redundant records because
+they do not provide additional information about game
+ownership and could lead to incorrect calculations
+if records were counted multiple times.
+The first occurrence of each duplicated record will
+be retained using `drop_duplicates()`.
+
+The analysis identified 24 play records associated
+with 12 repeated user-game combinations.
+These records contain different playtime values
+for the same user and game.
+Since the dataset does not clearly document whether
+these values represent independent gaming sessions
+or overlapping cumulative measurements, I decided
+to retain the maximum recorded playtime for each
+user-game combination.
+The `groupby()` and `idxmax()` methods will be used
+to identify and retain the records with the highest
+playtime values.
+
+The `extra` column contains only zero values across
+all 200,000 records.
+
+Since this column has no variation and provides
+no useful information for the clustering task,
+I decided to remove it from the cleaned dataset.
+The `drop()` method will be used to remove this column.

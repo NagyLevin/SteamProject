@@ -1,0 +1,68 @@
+= User-Level Feature Engineering
+
+== Problem and Motivation
+
+The cleaned Steam dataset contains user-game interaction
+records rather than individual user observations.
+
+Each user may appear in multiple rows, representing
+different games and interaction types.
+
+However, the objective of this project is to identify
+groups of Steam users based on their gaming behavior.
+
+Therefore, the interaction-level dataset must be
+transformed into a user-level dataset, where each
+user is represented by a single row.
+
+== Feature Engineering Strategy
+
+I created numerical features that summarize
+each user's gaming activity, including the number
+of games owned, the number of games played, and
+recorded playtime statistics.
+
+These features will allow clustering algorithms
+to compare users based on their behavioral patterns.
+
+The original cleaned dataset will be preserved,
+including individual game names and interaction
+records.
+
+== User-Level Feature Creation
+
+I created the `create_user_features()` function to
+transform the cleaned interaction-level dataset
+into a user-level dataset.
+
+I used `groupby("user_id")` to group all records
+belonging to the same user.
+
+A `for` loop was then used to iterate through
+each user group and calculate six behavioral features:
+
+* `games_purchased`: Number of distinct owned games.
+* `games_played`: Number of distinct played games.
+* `total_playtime`: Sum of recorded playtime.
+* `avg_playtime`: Average playtime per played game.
+* `max_playtime`: Highest recorded playtime in one game.
+* `play_ratio`: Proportion of owned games that were played.
+
+The calculated features were stored in a dictionary
+using the user ID as the key.
+
+Finally, I used `pd.DataFrame.from_dict()` to convert
+the dictionary into a user-level DataFrame.
+
+For users without recorded playtime, the average
+playtime is represented as zero for the purposes
+of subsequent numerical analysis.
+
+=== Purpose
+
+The new dataset represents each Steam user with a
+single row containing numerical behavioral features.
+
+This format is suitable for clustering algorithms,
+which will be used to identify similarities and
+differences in users' gaming behavior.

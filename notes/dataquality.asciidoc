@@ -42,3 +42,43 @@ The dataset contains 707 fully duplicated rows out of
 of the dataset.
 
 The duplicated rows will first be examined to determine their behavior types and whether they represent redundant information.
+
+To investigate the duplicates further, I created the
+`inspect_duplicate_records()` function, which uses
+`value_counts()` to examine their distribution
+across behavior types.
+
+All 707 fully duplicated records belong to the
+`purchase` category. No fully duplicated `play`
+records were detected.
+
+Further inspection showed that some purchase
+records appear multiple times for the same user
+and game.
+
+Examples include games from the Grand Theft Auto
+series and Sid Meier's Civilization IV.
+
+One possible explanation is that the duplicates
+were introduced during the original data collection
+or processing procedure. However, the exact cause is unknown for me.
+
+I used `duplicated(subset=["user_id", "game_name"],
+keep=False)` to identify multiple play records
+associated with the same user and game.
+
+The analysis identified 24 matching play records.
+
+Unlike the previously identified 707 fully duplicated
+purchase records, these play records contain different
+playtime values.
+
+For example, one user has two recorded playtime
+values of 135.0 and 2.0 hours for
+Sid Meier's Civilization IV.
+
+Summing the values could potentially overestimate
+total playtime if the measurements overlap.
+
+I will keep the bigger number for each user.
+

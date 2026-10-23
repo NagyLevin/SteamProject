@@ -82,3 +82,110 @@ total playtime if the measurements overlap.
 
 I will keep the bigger number for each user.
 
+== Invalid, Negative and Zero Values
+
+I created the `value_check()` function
+to identify potentially invalid numerical values
+in the original dataset.
+
+Since the `value` column has different meanings
+depending on the behavior type, purchase and play
+records were examined separately.
+
+For purchase records, I checked whether all values
+were equal to 1.0 using the `!=` operator.
+
+For play records, I used comparison operators to
+identify negative and zero playtime values.
+
+I also used `np.isfinite()` to identify missing
+or non-finite numerical values and `.isin()` to
+check for unexpected behavior categories.
+
+Finally, I calculated the minimum and maximum
+recorded playtime to understand the range of values.
+
+I got the following resoults:
+[cols="3,1", options="header"]
+|===
+|Quality Check |Result
+
+|Invalid behavior records
+|0
+
+|Invalid numeric values
+|0
+
+|Invalid purchase values
+|0
+
+|Negative playtime records
+|0
+
+|Zero playtime records
+|0
+
+|Minimum playtime
+|0.1 hours
+
+|Maximum playtime
+|11,754 hours
+|===
+
+The analysis did not identify any invalid behavior
+categories, non-finite numerical values, or negative
+and zero playtime records.
+
+All purchase records have a value of 1.0, while
+all play records contain positive playtime values.
+
+The maximum recorded playtime is 11,754 hours,
+which is considerably higher than the minimum
+of 0.1 hours.
+
+Although this extreme value may represent legitimate
+gaming activity, it requires further investigation later to see if its an outlier.
+
+== Purchase-Play Relationship Validation
+
+I created the `get_purchase_play_relationships()`
+function to examine how purchase and play records
+are connected at the user-game level.
+
+I used Python sets to represent unique user-game
+combinations for each behavior type.
+
+Using set intersection and difference operations,
+I identified three categories:
+
+* User-game pairs containing both purchase and play records.
+* User-game pairs containing only purchase records.
+* User-game pairs containing only play records.
+
+The resoults of this are:
+
+[cols="3,1", options="header"]
+|===
+|Relationship |Number of Pairs
+
+|Unique user-game pairs
+|128,804
+
+|Purchase and play
+|70,477
+
+|Purchase only
+|58,327
+
+|Play only
+|0
+|===
+
+The dataset contains 128,804 unique user-game pairs.
+
+Among these pairs, 70,477 (54.72%) have both purchase
+and play records, while 58,327 (45.28%) have only
+purchase records.
+
+No additional cleaning is required based on
+the purchase-play relationship validation.

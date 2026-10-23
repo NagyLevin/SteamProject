@@ -1,4 +1,6 @@
 import pandas as pd
+import pandas as pd
+import numpy as np
 
 def main():
     df = pd.read_csv( #read csv file
@@ -39,13 +41,90 @@ def main():
     print("Repeated User-Game Play Records")
     print("Matching rows:", len(repeated_play_records))
     print(repeated_play_records.head(10).to_string(index=False))
+    
+    value_checked_dict = value_check(df)
+
+    # Value Quality Assessment
+
+    for metric, value in value_checked_dict.items():
+        print(f"{metric}: {value}")
+
+    
+    # Check purchase-play relationships
+    relationship_summary = get_purchase_play_relationships(df)
+
+    
+
+    for metric, value in relationship_summary.items():
+        print(f"{metric}: {value}")
+
+
+def get_purchase_play_relationships(df: pd.DataFrame) -> dict:
+
+        print("--- Purchase-Play Relationships ---")
+
+        # Create sets of unique user-game pairs
+        purchase_pairs = set(
+            df[df["behavior"] == "purchase"]
+            [["user_id", "game_name"]]
+            .itertuples(index=False, name=None)
+        )
+
+        play_pairs = set(
+            df[df["behavior"] == "play"]
+            [["user_id", "game_name"]]
+            .itertuples(index=False, name=None)
+        )
+
+        # Compare the two sets
+        both = purchase_pairs & play_pairs #both
+        purchase_only = purchase_pairs - play_pairs #only buy
+        play_only = play_pairs - purchase_pairs #only play
+
+        return {
+            "Unique user-game pairs": len(purchase_pairs | play_pairs),
+            "Purchase and play": len(both),
+            "Purchase only": len(purchase_only),
+            "Play only": len(play_only)
+        }
+
+
+def value_check(df: pd.DataFrame) -> dict:
+    print("---Value Quality Assessment---")
+    # Separate purchase and play records
+    purchase_df = df[df["behavior"] == "purchase"]
+    play_df = df[df["behavior"] == "play"]
+
+    # Check for unexpected behavior types behaivour shoud be purchase or play nothing else
+    invalid_behavior = ~df["behavior"].isin(["purchase", "play"]) 
+
+    # Check invalid numeric values #records that are inf are not allowed
+    invalid_numeric = ~np.isfinite(df["value"]) #~ flip the logical value 
+
+    # Purchase records should have value = 1.0
+    invalid_purchase = purchase_df["value"] != 1.0
+
+    # Check playtime values playtime cant be negative or 0
+    negative_playtime = play_df["value"] < 0
+    zero_playtime = play_df["value"] == 0
+
+    return { #return more things at the same time 
+        "Invalid behavior records": int(invalid_behavior.sum()),
+        "Invalid numeric values": int(invalid_numeric.sum()),
+        "Invalid purchase values": int(invalid_purchase.sum()),
+        "Negative playtime records": int(negative_playtime.sum()),
+        "Zero playtime records": int(zero_playtime.sum()),
+        "Minimum playtime": play_df["value"].min(),
+        "Maximum playtime": play_df["value"].max()
+    }
+
 
 
 def inspect_duplicate_records(
     df: pd.DataFrame,
     sample_size: int = 12
 ) -> tuple[pd.DataFrame, pd.Series]:
-
+    print("Inspect duplicate records")
     # Select all occurrences of duplicated records and keep them
     duplicate_rows = df[df.duplicated(keep=False)]
 
@@ -77,6 +156,7 @@ def get_duplicates(df: pd.DataFrame) -> dict:
     }
 
 def get_missing_values(df: pd.DataFrame) -> pd.DataFrame:
+    print("---Get missing values---")
     missing_count = df.isna().sum()
     missing_percent = df.isna().mean() * 100
 

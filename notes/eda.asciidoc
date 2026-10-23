@@ -54,3 +54,57 @@ medians, together with high standard deviations,
 indicate strongly right-skewed distributions.
 The maximum recorded library size is 1,068 games,
 and the maximum total playtime is 11,754 hours.
+
+I used the Pandas `quantile()` method to calculate
+the 90th, 95th, and 99th percentiles of the
+`games_purchased` feature.
+
+The following results were obtained:
+
+* 90th percentile: 20 games
+* 95th percentile: 42 games
+* 99th percentile: 154.16 games
+
+The results indicate that approximately 90% of
+users own no more than 20 games, while approximately
+95% own no more than 42 games.
+
+The 99th percentile is approximately 154 games,
+compared to the maximum recorded value of
+1,068 games.
+
+A relatively small proportion of users have
+substantially larger game libraries than the
+majority of the dataset.
+
+== Games Purchased Distribution Visualization
+
+To better understand the distribution of game
+ownership, I divided users into several categories
+based on their number of purchased games.
+
+The categories include individual values for
+users owning 1, 2, or 3 games, followed by
+larger intervals for users with bigger libraries.
+I used the Pandas `pd.cut()` function to assign
+each user to a category.
+
+The `value_counts()` method was then used to
+calculate the number of users in each group.
+
+A horizontal bar chart was created using Matplotlib.
+
+The distribution analysis was performed on
+12,393 Steam users.
+
+The results showed that 5,700 users (46.0%)
+owned exactly one game.
+
+A total of 8,003 users (64.6%) owned no more
+than three games, while 11,185 users (90.3%)
+owned no more than 20 games.
+
+Only 245 users (2.0%) owned more than 100 games.
+
+These findings confirm that the distribution
+of purchased games is strongly right-skewed.

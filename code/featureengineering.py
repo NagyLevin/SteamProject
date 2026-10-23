@@ -25,6 +25,54 @@ def main():
     print("Total games purchased:", user_df["games_purchased"].sum())
     print("Total games played:", user_df["games_played"].sum())
     print("User-level shape:", user_df.shape)
+    
+    validate_user_features(user_df)
+
+    #save dataset
+    output_path = "data/processed/user_features.csv"
+
+    user_df.to_csv(output_path, index=False)
+
+
+
+
+def validate_user_features(user_df: pd.DataFrame) -> None:
+    # Check feature consistency
+    checks = {
+        "No duplicate users":
+            not user_df["user_id"].duplicated().any(),
+
+        "No missing values":
+            not user_df.isna().any().any(),
+
+        "Games played <= games purchased":
+            (user_df["games_played"] <= user_df["games_purchased"]).all(),
+
+        "Play ratio between 0 and 1":
+            user_df["play_ratio"].between(0, 1).all(),
+
+        "No negative playtime":
+            (user_df[
+                ["total_playtime", "avg_playtime", "max_playtime"]
+            ] >= 0).all().all(),
+
+        "Zero playtime for users with no played games":
+            (user_df.loc[
+                user_df["games_played"] == 0,
+                "total_playtime"
+            ] == 0).all()
+    }
+
+    # Print validation results
+    print("--- User Feature Validation ---")
+
+    for check, result in checks.items():
+        print(f"{check}: {result}")
+
+    #qzuit if any check fails
+    if not all(checks.values()):
+        raise ValueError("User feature validation failed!")
+
 
    
 def create_user_features(df: pd.DataFrame) -> pd.DataFrame:

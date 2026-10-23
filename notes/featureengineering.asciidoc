@@ -66,3 +66,24 @@ single row containing numerical behavioral features.
 This format is suitable for clustering algorithms,
 which will be used to identify similarities and
 differences in users' gaming behavior.
+
+== Feature Validation
+
+Additional consistency checks were implemented
+to detect invalid user-level feature values.
+
+These checks verify that:
+
+* Each user appears exactly once.
+* No feature values are missing.
+* The number of games played does not exceed
+  the number of games purchased.
+* The play ratio is between 0 and 1.
+* Recorded playtime values are non-negative.
+* Users without played games have zero total playtime.
+
+All six feature validation checks passed successfully
+
+I exported the collected data
+`data/processed/user_features.csv` using
+the Pandas `to_csv()` method.

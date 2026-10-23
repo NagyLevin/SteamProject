@@ -11,3 +11,51 @@ the `drop()` method to remove this unnecessary column.
 
 The `.copy()` method was used to create a separate
 DataFrame, preserving the original dataset.
+
+== Removing Fully Duplicated Records
+
+Based on the Data Quality Assessment, I identified
+707 fully duplicated records, representing approximately
+0.35% of the original dataset.
+
+I created the `remove_duplicate_records()` function
+using the `drop_duplicates()` method to remove redundant
+rows while preserving their first occurrence.
+
+The `.copy()` method was used to create a separate
+DataFrame without modifying the original dataset.
+
+== Handling Repeated Playtime Records
+
+Based on the Data Quality Assessment, I identified
+24 play records belonging to 12 repeated user-game
+combinations.
+
+These records contained different playtime values
+for the same user and game.
+
+I decided to retain the maximum recorded playtime
+for each user-game combination to avoid potentially
+double-counting overlapping playtime measurements.
+
+== Cleaned Dataset Export and Validation
+
+After completing the three cleaning operations,
+I exported the resulting DataFrame to a new CSV
+file named `clean_steamdata.csv`.
+
+I used the `to_csv()` method with `index=False`
+to save the dataset without including the
+DataFrame index as an additional column.
+
+Instead of implementing a separate set of
+validation functions, I reused the existing
+functions from `dataquality.py`.
+
+The cleaned CSV file was loaded into Pandas
+and subjected to the same data quality checks
+used for the original dataset.
+
+These checks include missing values, duplicate
+records, invalid numerical values, repeated
+play records, and purchase-play relationships.

@@ -4,7 +4,8 @@ import numpy as np
 
 def main():
     df = pd.read_csv( #read csv file
-        "data/raw/steam-200k.csv",
+        #"data/raw/steam-200k.csv",
+        "data/processed/clean_steamdata.csv",
         header=None,
         names=["user_id", "game_name", "behavior", "value", "extra"] #gve names to the colums
     )

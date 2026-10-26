@@ -360,3 +360,133 @@ between `games_purchased` and `play_ratio`.
 This indicates that users with larger recorded
 game libraries generally have a lower proportion
 of games with recorded playtime.
+
+== Outlier Analysis
+
+I performed an outlier analysis to
+identify unusually high or low observations.
+
+I used the Interquartile Range (IQR) method
+to identify potential outliers.
+
+The IQR was calculated as the difference
+between the third quartile (Q3) and the first
+quartile (Q1).
+
+The lower and upper boundaries were defined as:
+
+* Lower bound = Q1 - 1.5 * IQR
+* Upper bound = Q3 + 1.5 * IQR
+
+I applied this method to the `games_purchased`
+and `total_playtime` features.
+
+Extremely high values do not necessarily
+represent incorrect data.
+
+Users with large game libraries or extensive
+recorded playtime may represent legitimate
+behavioral patterns relevant to clustering.
+
+After running the outlier analysis i got the following resoults:
+
+[cols="2,1,1,1",options="header"]
+|===
+|Feature |Upper Bound |Outlier Count |Outlier Percentage
+
+|games_purchased |13.50 |1672 |13.49%
+|total_playtime |387.05 |2072 |16.72%
+|===
+
+For `games_purchased`, the first quartile was 1
+and the third quartile was 6, resulting in an
+IQR of 5.
+
+The upper outlier boundary was 13.5 games.
+
+A total of 1,672 users (13.49%) owned at least
+14 games and were identified as potential outliers.
+
+For `total_playtime`, the first quartile was
+1.3 hours and the third quartile was 155.6 hours.
+
+The resulting IQR was 154.3 hours, and the upper
+outlier boundary was 387.05 hours.
+
+A total of 2,072 users (16.72%) exceeded this
+boundary.
+
+The results confirm that the distributions of
+game ownership and recorded playtime contain
+a substantial number of unusually high values.
+
+However, these observations do not necessarily
+represent incorrect data.
+
+For example, users owning more than 13 games
+may be considered outliers by the IQR method
+because the majority of users in the dataset
+have very small recorded game libraries.
+
+Similarly, users with more than 387.05 hours
+of recorded playtime may represent legitimate
+highly active players.
+
+Removing these users could exclude meaningful
+behavioral patterns from the clustering analysis.
+
+Therefore i decided to keep all user observations.
+
+== EDA Conclusions
+
+The exploratory data analysis was performed on
+12,393 Steam users using six numerical behavioral
+features.
+
+The analysis revealed several important patterns
+in game ownership and recorded playtime behavior.
+
+First, game ownership was highly unevenly
+distributed. Approximately 46.0% of users owned
+only one game, while 90.3% owned no more than
+20 games.
+
+The mean number of purchased games was 10.39,
+compared to a median of only 2.
+
+Second, total recorded playtime was also strongly
+right-skewed.
+
+Approximately 70.8% of users had no more than
+100 hours of recorded playtime, while 8.2% had
+more than 1,000 hours.
+
+The mean total playtime was 278.01 hours,
+compared to a median of 13.5 hours.
+
+Third, users with larger game libraries generally
+showed higher recorded total playtime.
+
+For example, users owning only one game had a
+median total playtime of 2.70 hours, compared
+to 1,860.50 hours among users owning more
+than 100 games.
+
+Fourth, the correlation analysis identified
+strong relationships between several features.
+
+In particular, `total_playtime` and
+`max_playtime` showed a Spearman correlation
+of 0.99, suggesting potentially overlapping
+information.
+
+Finally, the IQR-based outlier analysis
+identified 1,672 users (13.49%) with unusually
+high numbers of purchased games and 2,072
+users (16.72%) with unusually high total
+recorded playtime.
+
+These potential outliers were retained because
+they may represent meaningful gaming behavior
+rather than incorrect observations.
+

@@ -50,6 +50,54 @@ def main():
     print(correlation_matrix.round(2).to_string())
     plot_correlation_heatmap(correlation_matrix)
 
+    print("--- Outlier Analysis ---")
+    outlier_results = analyze_outliers(df)
+    print(outlier_results.round(2).to_string(index=False))
+
+
+def analyze_outliers(df: pd.DataFrame) -> pd.DataFrame:
+    # Select features for outlier analysis
+    features = ["games_purchased", "total_playtime"] #tow coloums that we want to use can be expanded
+
+
+    # Store analysis results
+    results = []
+
+    for feature in features:
+        # Calculate quartiles
+        q1 = df[feature].quantile(0.25)
+        q3 = df[feature].quantile(0.75)
+
+        # Calculate IQR and boundaries
+        iqr = q3 - q1
+        lower_bound = q1 - 1.5 * iqr
+        upper_bound = q3 + 1.5 * iqr
+
+        # Select potential outliers
+        outliers = df[
+            (df[feature] < lower_bound) |
+            (df[feature] > upper_bound)
+        ]
+
+        # Calculate outlier count and percentage
+        outlier_count = len(outliers)
+        outlier_percentage = outlier_count / len(df) * 100
+
+        # Store results
+        results.append({
+            "feature": feature,
+            "Q1": q1,
+            "Q3": q3,
+            "IQR": iqr,
+            "lower_bound": lower_bound,
+            "upper_bound": upper_bound,
+            "outlier_count": outlier_count,
+            "outlier_percentage": outlier_percentage
+        })
+
+    # Convert results to DataFrame
+    return pd.DataFrame(results)
+
 
 def plot_correlation_heatmap(correlation_matrix: pd.DataFrame) -> None:
     # Create heatmap

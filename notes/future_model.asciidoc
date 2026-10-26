@@ -1,0 +1,155 @@
+
+= Future Modeling Plan
+
+== Modeling Objective
+
+The next stage of the project will focus on
+identifying distinct Steam player segments
+using machine learning.
+
+The main research question is:
+
+Can Steam users be grouped into meaningful
+segments based on their game ownership and
+recorded playtime behavior?
+
+I plan to use K-Means clustering to investigate
+this question.
+
+== Modeling Dataset
+
+The modeling dataset contains 12,393 Steam users.
+
+Each user is represented by six numerical
+behavioral features:
+
+* `games_purchased`
+* `games_played`
+* `total_playtime`
+* `avg_playtime`
+* `max_playtime`
+* `play_ratio`
+
+The `user_id` column will be excluded from the
+clustering input because it is an identifier
+rather than a behavioral characteristic.
+
+Since this is an unsupervised learning problem,
+the dataset does not contain predefined
+target labels.
+
+== Baseline Model
+
+I plan to implement K-Means as the baseline
+clustering algorithm.
+
+The baseline will initially use all six
+numerical behavioral features.
+
+StandardScaler will be applied to reduce the
+effect of differences in feature scales.
+
+An initial experiment will use three clusters
+(K = 3).
+
+This number is only a starting point and does
+not assume that exactly three player segments
+exist.
+
+A fixed random state will be used to improve
+reproducibility.
+
+== Model Evaluation
+
+The clustering results will be evaluated
+using the Silhouette Score.
+
+This metric measures how well observations
+fit within their assigned clusters compared
+to other clusters.
+
+In addition to the Silhouette Score, I will
+examine cluster sizes and behavioral
+characteristics.
+
+The objective is not only to achieve a good
+evaluation score, but also to identify
+interpretable player segments.
+
+Since no ground-truth labels are available,
+traditional classification accuracy cannot
+be used.
+
+== Model Improvement
+
+The exploratory analysis identified several
+characteristics that may affect K-Means.
+
+First, game ownership and playtime features
+showed strongly right-skewed distributions.
+
+Therefore, logarithmic transformations will
+be investigated to reduce the influence
+of extremely high values.
+
+Second, the outlier analysis identified
+substantial numbers of unusually high
+observations.
+
+Alternative scaling methods, including
+RobustScaler, will be considered.
+
+Third, several playtime-related features
+showed very strong correlations.
+
+For example, `total_playtime` and
+`max_playtime` had a Spearman correlation
+of 0.99.
+
+Therefore, I plan to compare the complete
+feature set against reduced feature sets
+to investigate potential redundancy.
+
+Finally, different numbers of clusters
+will be evaluated to determine whether
+alternative cluster configurations provide
+better results.
+
+== Comparison and Interpretation
+
+The baseline and improved clustering models
+will be compared using evaluation scores,
+cluster distributions, and interpretability.
+
+For each clustering solution, I will examine
+the characteristics of the resulting groups.
+
+These characteristics may include game library
+size, number of games played, total playtime,
+and play ratio.
+
+The analysis will investigate whether these
+groups represent meaningful differences
+in recorded player behavior.
+
+Any identified player segments will be
+interpreted based on the observed data
+rather than predefined player categories.
+
+== Expected Challenges
+
+The main anticipated challenges include:
+
+* Strongly skewed behavioral features.
+* Extreme game ownership and playtime values.
+* High correlations between numerical features.
+* Selecting an appropriate number of clusters.
+* Interpreting clusters without predefined labels.
+
+These challenges will be addressed through
+preprocessing experiments and comparative
+evaluation.
+
+In teh modeling stage i will determine whether
+the available behavioral features support
+meaningful Steam player segmentation.

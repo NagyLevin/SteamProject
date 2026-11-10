@@ -1,0 +1,18 @@
+
+= Clustering
+
+== 1. Initial K-Means Model
+
+I started the clustering process using K-Means to group Steam users based on their gaming behavior.
+
+First, I standardized the numerical features using StandardScaler, then created a K-Means model with 3 clusters.
+
+StandardScaler standardizes the features so that their different numerical scales do not dominate the clustering.
+
+KMeans divides the users into 3 groups based on similarities in their behavioral features.
+
+I will evaluate the clustering using three metrics:
+
+* Silhouette Score: Measures how well the clusters are separated. Higher is better.
+* Davies-Bouldin Index: Measures cluster similarity and separation. Lower is better.
+* Inertia: Measures the sum of squared distances between users and their cluster centers. Lower values indicate more compact clusters, but must be compared across different K values.

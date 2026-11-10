@@ -1,0 +1,15 @@
+==Motivation
+A potential application of player segmentation is
+personalized marketing. By identifying groups of
+users with similar gaming behavior, Steam could
+provide more relevant game recommendations,
+discount offers, and notifications.
+
+For example, users with large libraries but
+relatively low playtime might receive different
+recommendations from users who spend many hours
+playing a small number of games.
+
+Although this project does not implement a
+recommendation system, its clustering results
+could provide a foundation for such applications.

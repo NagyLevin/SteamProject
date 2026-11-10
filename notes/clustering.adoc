@@ -46,3 +46,25 @@ This may indicate that K-Means is separating users with extreme gaming behavior 
 The Davies-Bouldin Index and Inertia will be used to compare this baseline with future models.
 
 Before improving the model, I will examine the characteristics of each cluster to understand which types of players they represent.
+
+== 3. Cluster Profiling
+
+I examined the mean and median values of the six behavioral features for each cluster.
+
+The results suggest three different player groups:
+
+* Cluster 0 (481 users): Dedicated Players. These users spend a large amount of time playing a relatively small number of games.
+* Cluster 1 (11,634 users): Low-Activity Players. Most users belong to this group. Their median total playtime is only 10.1 hours.
+* Cluster 2 (278 users): Large-Library Players. These users own and play many different games, with an average of 186 purchased games and 94 played games.
+
+=== Evaluation
+
+Clusters 0 and 2 have similar average total playtime (approximately 2,500 hours), but very different gaming habits.
+
+Cluster 0 concentrates more playtime on individual games, while Cluster 2 distributes its playtime across many different games.
+
+This suggests that the model identifies meaningful differences in player behavior.
+
+However, the cluster sizes are highly unbalanced, and almost 94% of users belong to Cluster 1.
+
+I will therefore test different numbers of clusters to determine whether the users can be divided into more informative groups.

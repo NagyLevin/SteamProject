@@ -58,3 +58,20 @@ df["cluster"] = labels
 
 print("Cluster Sizes:")
 print(df["cluster"].value_counts().sort_index())
+
+
+
+# Calculate average feature values for each cluster
+cluster_means = df.groupby("cluster")[features].mean()
+
+print("Cluster Averages:")
+print(cluster_means.round(2).to_string())
+
+# Calculate median feature values for each cluster
+cluster_medians = df.groupby("cluster")[features].median()
+
+print("Cluster Medians:")
+print(cluster_medians.round(2).to_string())
+
+#TODO Elbow Method to determine the optimal number of clusters
+

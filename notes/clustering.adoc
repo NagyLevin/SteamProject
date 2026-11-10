@@ -16,3 +16,33 @@ I will evaluate the clustering using three metrics:
 * Silhouette Score: Measures how well the clusters are separated. Higher is better.
 * Davies-Bouldin Index: Measures cluster similarity and separation. Lower is better.
 * Inertia: Measures the sum of squared distances between users and their cluster centers. Lower values indicate more compact clusters, but must be compared across different K values.
+
+
+
+== 2. Initial Clustering Results
+
+I ran my first K-Means model using 3 clusters, StandardScaler, random_state=13, and a sample of 6000 users for the Silhouette Score.
+
+The model produced the following results:
+
+* Silhouette Score: 0.7376
+* Davies-Bouldin Index: 0.9721
+* Inertia: 41341.29
+
+Cluster sizes:
+
+* Cluster 0: 481 users
+* Cluster 1: 11,634 users
+* Cluster 2: 278 users
+
+=== Evaluation
+
+The Silhouette Score of 0.7376 suggests that the clusters are relatively well separated.
+
+However, the cluster sizes are very unbalanced. Around 94% of users belong to one cluster, while the other two clusters contain only a small number of users.
+
+This may indicate that K-Means is separating users with extreme gaming behavior from the majority.
+
+The Davies-Bouldin Index and Inertia will be used to compare this baseline with future models.
+
+Before improving the model, I will examine the characteristics of each cluster to understand which types of players they represent.

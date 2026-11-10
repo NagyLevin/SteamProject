@@ -19,7 +19,7 @@ features = [
 ]
 
 X = df[features]
-
+#print(X.size)
 # Standardize the behavioral features
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
@@ -32,9 +32,29 @@ kmeans = KMeans(
     n_init=10 #number of times to run the clustering algorithm with different initial centroids
 )
 
-kmeans.fit(X_scaled)
+kmeans.fit(X_scaled) #every user is assigned to a cluster
 
 # Get cluster labels
 labels = kmeans.labels_ #groups of users
 
-print(labels)
+#print(labels)
+
+# Evaluate clustering
+silhouette = silhouette_score(
+    X_scaled,
+    labels,
+    sample_size=6000, #to reduce computation time use only a sample
+    random_state=13
+)
+
+dbi = davies_bouldin_score(X_scaled, labels)
+
+print("Silhouette Score:", round(silhouette, 4))
+print("Davies-Bouldin Index:", round(dbi, 4))
+print("Inertia:", round(kmeans.inertia_, 2))
+
+# Display cluster sizes
+df["cluster"] = labels
+
+print("Cluster Sizes:")
+print(df["cluster"].value_counts().sort_index())

@@ -1,9 +1,10 @@
 
 import pandas as pd
-
+import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score, davies_bouldin_score
+from pathlib import Path
 
 # Load user-level dataset
 df = pd.read_csv("data/processed/user_features.csv")
@@ -73,5 +74,35 @@ cluster_medians = df.groupby("cluster")[features].median()
 print("Cluster Medians:")
 print(cluster_medians.round(2).to_string())
 
-#TODO Elbow Method to determine the optimal number of clusters
 
+# Test different numbers of clusters using the Elbow Method
+inertia_values = []
+K = range(1, 11) #try 10 different numbers of clusters
+
+for k in K:
+    model = KMeans(
+        n_clusters=k,
+        max_iter=300,
+        random_state=13,
+        n_init=10
+    )
+
+    model.fit(X_scaled)
+    inertia_values.append(model.inertia_)
+
+# Plot the Elbow Method graph
+plt.figure(figsize=(8, 5))
+plt.plot(K, inertia_values, marker="o")
+
+plt.xlabel("Number of Clusters (K)")
+plt.ylabel("Inertia")
+plt.title("Elbow Method for Steam Player Clustering")
+plt.xticks(list(K))
+plt.grid(True)
+
+# Save the figure
+output_path = Path("figures/elbow_method.png")
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+plt.close()

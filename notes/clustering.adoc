@@ -68,3 +68,18 @@ This suggests that the model identifies meaningful differences in player behavio
 However, the cluster sizes are highly unbalanced, and almost 94% of users belong to Cluster 1.
 
 I will therefore test different numbers of clusters to determine whether the users can be divided into more informative groups.
+
+
+== 4. Elbow Method
+
+I used the Elbow Method to investigate the optimal number of clusters.
+
+I tested K values from 1 to 10 and plotted the Inertia for each model.
+
+image::figures/elbow_method.png[Elbow Method for Steam Player Clustering, width=650]
+
+The graph shows that Inertia decreases rapidly until approximately K=4, after which the improvement becomes smaller.
+
+This suggests that K=4 might be a good choice, but the elbow is not completely clear.
+
+I will compare Silhouette Scores and Davies-Bouldin Index values for different numbers of clusters.

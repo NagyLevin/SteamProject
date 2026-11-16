@@ -106,3 +106,36 @@ output_path.parent.mkdir(parents=True, exist_ok=True)
 
 plt.savefig(output_path, dpi=300, bbox_inches="tight")
 plt.close()
+
+
+
+# Compare different numbers of clusters using Silhouette Scores and Davies-Bouldin Index
+print("K-Means Model Comparison")
+
+for k in range(2, 11): 
+    model = KMeans(
+        n_clusters=k,
+        max_iter=300,
+        random_state=13,
+        n_init=10
+    )
+
+    labels_k = model.fit_predict(X_scaled)
+
+    silhouette_k = silhouette_score(
+        X_scaled,
+        labels_k,
+        sample_size=6000,
+        random_state=13
+    )
+
+    dbi_k = davies_bouldin_score(
+        X_scaled,
+        labels_k
+    )
+
+    print(
+        f"K={k} | "
+        f"Silhouette: {silhouette_k:.4f} | "
+        f"Davies-Bouldin: {dbi_k:.4f}"
+    )

@@ -83,3 +83,33 @@ The graph shows that Inertia decreases rapidly until approximately K=4, after wh
 This suggests that K=4 might be a good choice, but the elbow is not completely clear.
 
 I will compare Silhouette Scores and Davies-Bouldin Index values for different numbers of clusters.
+
+== 5. Comparing Different K Values
+
+I tested K-Means models with K values from 2 to 10 and compared their Silhouette Scores and Davies-Bouldin Index values.
+
+[cols="1,2,2",options="header"]
+|===
+|K |Silhouette Score |Davies-Bouldin Index
+|2 |0.7363 |1.1336
+|3 |0.7376 |0.9721
+|4 |0.5553 |0.9132
+|5 |0.5908 |0.9746
+|6 |0.5895 |0.8681
+|7 |0.6087 |0.9317
+|8 |0.6158 |0.8781
+|9 |0.5769 |0.8675
+|10 |0.5842 |0.8967
+|===
+
+=== Results and Evaluation
+
+K=3 achieved the highest Silhouette Score (0.7376), suggesting the best cluster separation among the tested models according to this metric.
+
+K=9 achieved the lowest Davies-Bouldin Index (0.8675), but its Silhouette Score was considerably lower.
+
+The Elbow Method suggested approximately K=4, although there was no clear elbow.
+
+Based on these results, K=3 remains our preferred baseline. However, almost 94% of users belong to one cluster.
+
+I will examine alternative clustering configurations to see whether I can identify more informative player segments.

@@ -109,7 +109,7 @@ Only 245 users (2.0%) owned more than 100 games.
 These findings confirm that the distribution
 of purchased games is strongly right-skewed.
 
-image::figures/games_purchased_groups.png[width=650]
+image::../figures/games_purchased_groups.png[width=650]
 
 == Total Playtime Distribution
 
@@ -158,7 +158,7 @@ suggest that this feature may be useful for
 distinguishing different levels of player activity.
 
 .Total Playtime Distribution
-image::figures/total_playtime_groups.png[width=650]
+image::../figures/total_playtime_groups.png[width=650]
 
 == Relationship Between Game Ownership and Playtime
 
@@ -325,7 +325,7 @@ relationships between the playtime-related
 features.
 
 .Spearman Correlation Heatmap
-image::figures/spearman_correlation_heatmap.png[width=650]
+image::../figures/spearman_correlation_heatmap.png[width=650]
 
 === Interpretation of Correlation Results
 

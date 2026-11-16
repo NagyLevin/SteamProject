@@ -76,7 +76,7 @@ I used the Elbow Method to investigate the optimal number of clusters.
 
 I tested K values from 1 to 10 and plotted the Inertia for each model.
 
-image::figures/elbow_method.png[Elbow Method for Steam Player Clustering, width=650]
+image::../figures/elbow_method.png[Elbow Method for Steam Player Clustering, width=650]
 
 The graph shows that Inertia decreases rapidly until approximately K=4, after which the improvement becomes smaller.
 

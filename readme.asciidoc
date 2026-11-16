@@ -1,4 +1,4 @@
-==Motivation
+=Motivation
 A potential application of player segmentation is
 personalized marketing. By identifying groups of
 users with similar gaming behavior, Steam could

@@ -113,3 +113,106 @@ The Elbow Method suggested approximately K=4, although there was no clear elbow.
 Based on these results, K=3 remains our preferred baseline. However, almost 94% of users belong to one cluster.
 
 I will examine alternative clustering configurations to see whether I can identify more informative player segments.
+
+
+
+== 6. Model Improvement alternative clustering configurations: Log Transformation
+
+I created a separate Python script, `code/clustering_log.py`, to test whether logarithmic transformation improves the clustering results.
+
+I applied `np.log1p()` to the game count and playtime features because the EDA showed highly skewed distributions and extreme values.
+
+After the transformation, I used StandardScaler and trained K-Means with the same parameters as the baseline model (K=3, random_state=13, n_init=10).
+
+This experiment aims to reduce the influence of extreme values and identify potentially more informative player segments.
+
+I will compare the evaluation scores, cluster sizes, and behavioral profiles with the original baseline model.
+
+
+== 7. Log Transformation Results
+
+I ran the K-Means model with logarithmic transformation using K=3.
+
+The results were:
+
+* Silhouette Score: 0.3940
+* Davies-Bouldin Index: 0.9737
+* Inertia: 29025.27
+
+Cluster sizes:
+
+* Cluster 0: 1,885 users (15.2%)
+* Cluster 1: 6,579 users (53.1%)
+* Cluster 2: 3,929 users (31.7%)
+
+=== Evaluation
+
+The logarithmic transformation produced more balanced cluster sizes compared to the baseline model.
+
+I identified three player groups:
+
+* Cluster 0: Large-Library Active Players, who own and play many different games.
+* Cluster 1: Low-Activity Players, who own few games and have very low recorded playtime.
+* Cluster 2: Focused Players, who spend considerable time playing a small number of games.
+
+The Silhouette Score decreased from 0.7376 to 0.3940, while the Davies-Bouldin Index remained almost unchanged.
+
+Since the transformation changes the feature space, these scores are not directly comparable as measures of improvement.
+
+Although the clusters are less clearly separated in the transformed space, their sizes and behavioral profiles appear more useful for player segmentation.
+
+Next, like before i will test different K values on the transformed dataset.
+
+
+== 8. Log Transformation: Comparing K Values
+
+I tested different numbers of clusters (K=2 to K=10) using the logarithmically transformed dataset.
+
+[cols="1,2,2,2",options="header"]
+|===
+|K |Silhouette Score |Davies-Bouldin |Largest Cluster
+|2 |0.4307 |0.9948 |61.2%
+|3 |0.3940 |0.9737 |53.1%
+|4 |0.4400 |0.8640 |40.7%
+|5 |0.4189 |0.9788 |30.2%
+|6 |0.4354 |0.9036 |28.8%
+|7 |0.4278 |0.9437 |27.9%
+|8 |0.4297 |0.9461 |25.8%
+|9 |0.4318 |0.9158 |25.8%
+|10 |0.4374 |0.9310 |25.1%
+|===
+
+=== Evaluation
+
+K=4 achieved both the highest Silhouette Score (0.4400) and the lowest Davies-Bouldin Index (0.8640).
+
+Compared to K=3, the largest cluster decreased from 53.1% to 40.7%.
+
+These results suggest that K=4 is a promising choice for the logarithmically transformed dataset.
+
+Now I will examine the four cluster profiles to determine whether they represent meaningful player segments.
+
+== 9. K=4 Cluster Profiling
+
+After comparing different K values, I examined that the four clusters produced by the logarithmic K-Means model with K=4.
+
+The model achieved a Silhouette Score of 0.4400 and a Davies-Bouldin Index of 0.8640.
+
+I identified four different player segments:
+
+* Cluster 0 - Focused Players (3,486 users): Own relatively few games but spend considerable time playing them.
+* Cluster 1 - Large-Library Players (1,765 users): Own and play many different games, with high total playtime.
+* Cluster 2 - Casual Players (5,049 users): Own few games and have low total playtime, but play most of their purchased games.
+* Cluster 3 - Inactive Library Owners (2,093 users): Own several games but play very few of them.
+
+=== Evaluation
+
+The four clusters show meaningful differences in game ownership, playtime, and play ratio.
+
+An interesting finding is the difference between Clusters 2 and 3. Both have low playtime, but Cluster 2 plays almost all purchased games, while Cluster 3 leaves most games unplayed.
+
+Compared to the baseline model, the logarithmic K=4 model produces more balanced and potentially more useful player segments.
+
+These segments could provide a foundation for personalized game recommendations and notifications.
+
+The logarithmic K=4 model is currently my preferred candidate, although further validation is needed.

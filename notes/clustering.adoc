@@ -216,3 +216,39 @@ Compared to the baseline model, the logarithmic K=4 model produces more balanced
 These segments could provide a foundation for personalized game recommendations and notifications.
 
 The logarithmic K=4 model is currently my preferred candidate, although further validation is needed.
+
+
+=== Cluster Size Visualization
+
+I created a bar chart showing the number of users in each cluster.
+
+image::../figures/log_k4_cluster_sizes.png[Log K-Means Cluster Sizes, width=650]
+
+The largest cluster contains 5,049 users (40.7%), while the smallest contains 1,765 users (14.2%).
+
+Compared to the baseline model, users are distributed more evenly across the four clusters.
+
+== 10. Cluster Stability Test
+
+I tested the stability of the logarithmic K-Means model (K=4) using six different random states.
+
+I used the Adjusted Rand Index (ARI) to compare the cluster assignments with the original K=4 model.
+
+[cols="1,2",options="header"]
+|===
+|Random State |Adjusted Rand Index
+|0 |1.0000
+|7 |1.0000
+|13 |1.0000
+|24 |1.0000
+|42 |1.0000
+|99 |1.0000
+|===
+
+=== Evaluation
+
+All tested random states produced an ARI of 1.0000, meaning that the cluster assignments were identical, apart from possible differences in cluster numbering.
+
+This indicates that my K=4 model is stable across the tested initializations.
+
+These results support using the logarithmic K-Means model with K=4 as my preferred clustering configuration.

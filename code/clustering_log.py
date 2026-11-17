@@ -5,6 +5,10 @@ import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score, davies_bouldin_score
+from sklearn.metrics import adjusted_rand_score
+
+import matplotlib.pyplot as plt
+from pathlib import Path
 
 # Load user-level dataset
 df = pd.read_csv("data/processed/user_features.csv")
@@ -146,4 +150,53 @@ cluster_medians4 = df.groupby("cluster_k4")[features].median()
 print("K=4 Cluster Medians:")
 print(cluster_medians4.round(2).to_string())
 
-#TODO make a grafikon mybe to visualise data
+
+
+# Visualize K=4 cluster on grafikonm
+cluster_sizes = df["cluster_k4"].value_counts().sort_index()
+
+plt.figure(figsize=(8, 5))
+plt.bar(cluster_sizes.index.astype(str), cluster_sizes.values)
+
+plt.xlabel("Cluster")
+plt.ylabel("Number of Users")
+plt.title("Steam Player Segments - Log K-Means (K=4)")
+
+for i, count in enumerate(cluster_sizes.values):
+    plt.text(i, count + 50, str(count), ha="center")
+
+# Save figure
+output_path = (
+    Path(__file__).resolve().parent.parent # cd .. cd.. 
+    / "figures"
+    / "log_k4_cluster_sizes.png"
+)
+
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+# Test clustering stability with different random states
+
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+plt.close()
+
+print("K=4 Clustering Stability Test")
+
+random_states = [0, 7, 13, 24, 42, 99]
+
+for seed in random_states:
+    model = KMeans(
+        n_clusters=4,
+        max_iter=300,
+        random_state=seed,
+        n_init=10
+    )
+
+    new_labels = model.fit_predict(X_scaled)
+
+    # Compare with our original K=4 model
+    ari = adjusted_rand_score(labels4, new_labels)
+
+    print(
+        f"Random State: {seed} | "
+        f"Adjusted Rand Index: {ari:.4f}"
+    )

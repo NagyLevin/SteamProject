@@ -200,3 +200,66 @@ for seed in random_states:
         f"Random State: {seed} | "
         f"Adjusted Rand Index: {ari:.4f}"
     )
+
+# Select features for visualization
+comparison_features = [
+    "games_purchased",
+    "total_playtime",
+    "play_ratio"
+]
+
+# Get cluster averages that i need using original data
+cluster_comparison = (
+    df.groupby("cluster_k4")[comparison_features]
+    .mean()
+)
+
+# Create three charts
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+titles = [
+    "Average Games Purchased",
+    "Average Total Playtime",
+    "Average Play Ratio"
+]
+
+# Plot each feature
+for i, feature in enumerate(comparison_features):
+    values = cluster_comparison[feature]
+
+    axes[i].bar(
+        values.index.astype(str),
+        values.values
+    )
+
+    axes[i].set_title(titles[i])
+    axes[i].set_xlabel("Cluster")
+    axes[i].set_ylabel(feature.replace("_", " ").title())
+
+    if feature == "play_ratio":
+        axes[i].set_ylim(0, 1.1)
+
+    # Display values above the bars
+    for j, value in enumerate(values):
+        axes[i].text(
+            j,
+            value,
+            f"{value:.2f}",
+            ha="center",
+            va="bottom"
+        )
+
+plt.suptitle("Steam Player Behavior by Cluster (K=4)")
+plt.tight_layout()
+
+# Save figure
+output_path = (
+    Path(__file__).resolve().parent.parent
+    / "figures"
+    / "log_k4_feature_comparison.png"
+)
+
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+plt.close()

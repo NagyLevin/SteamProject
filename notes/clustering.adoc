@@ -252,3 +252,23 @@ All tested random states produced an ARI of 1.0000, meaning that the cluster ass
 This indicates that my K=4 model is stable across the tested initializations.
 
 These results support using the logarithmic K-Means model with K=4 as my preferred clustering configuration.
+
+== 11. Cluster Feature Comparison
+
+I created a visualization comparing three behavioral features across the four clusters: games purchased, total playtime, and play ratio.
+
+image::../figures/log_k4_feature_comparison.png[Cluster Feature Comparison, width=650]
+
+=== Evaluation
+
+Cluster 0 contains focused players who spend considerable time playing relatively few games.
+
+Cluster 1 has the highest average game ownership and total playtime.
+
+Cluster 2 has low playtime but a high play ratio, meaning that users play most of their purchased games.
+
+Cluster 3 has the lowest play ratio, indicating that many purchased games remain unplayed.
+
+The figure shows that there is still a big difference between cluster 2 and 3.
+
+I will try to make a new modell with reduced feature set (games_purchased, games_played, total_playtime, play_ratio) where i use only 4 features to determine the optimal number of clusters

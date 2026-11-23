@@ -272,3 +272,36 @@ Cluster 3 has the lowest play ratio, indicating that many purchased games remain
 The figure shows that there is still a big difference between cluster 2 and 3.
 
 I will try to make a new modell with reduced feature set (games_purchased, games_played, total_playtime, play_ratio) where i use only 4 features to determine the optimal number of clusters
+
+== 12. Reduced Feature Model
+
+I created a new script, `clustering_reduced.py`, to test K-Means with four features instead of six.
+
+I removed `avg_playtime` and `max_playtime` because they were highly correlated with other playtime features.
+
+I kept the logarithmic transformation, StandardScaler, and K=4.
+
+=== Results
+
+* Silhouette Score: 0.4749
+* Davies-Bouldin Index: 0.8704
+* Inertia: 12184.59
+
+I identified four player groups:
+
+* Cluster 0 - Large-Library Players: 1,494 users
+* Cluster 1 - Inactive Library Owners: 2,371 users
+* Cluster 2 - Casual Players: 5,518 users
+* Cluster 3 - Focused Players: 3,010 users
+
+=== Evaluation
+
+The Silhouette Score increased from 0.4400 to 0.4749 compared to the six-feature log model.
+
+The Davies-Bouldin Index increased slightly from 0.8640 to 0.8704.
+
+Although these scores were calculated in different feature spaces, the reduced model identified similar behavioral groups using fewer features.
+
+The results suggest that four features may be sufficient for meaningful player segmentation.
+
+I will test the stability of this model before making the final selection.

@@ -305,3 +305,28 @@ Although these scores were calculated in different feature spaces, the reduced m
 The results suggest that four features may be sufficient for meaningful player segmentation.
 
 I will test the stability of this model before making the final selection.
+
+== 13. Reduced Feature Model Stability
+
+I tested the stability of the Reduced Feature K-Means model (K=4) using six different random states.
+
+[cols="1,2",options="header"]
+|===
+|Random State |Adjusted Rand Index
+|1 |0.9978
+|7 |0.9978
+|13 |1.0000
+|24 |0.9876
+|42 |0.9944
+|99 |0.9874
+|===
+
+=== Evaluation
+
+The Adjusted Rand Index ranged from 0.9874 to 1.0000, with an average of 0.9942.
+
+These results indicate that the model produces very similar clusters across different initializations.
+
+Although the six-feature model was slightly more stable, the reduced model also showed excellent stability.
+
+I selected the Reduced Feature K-Means model (K=4) as my final model because it uses fewer features while maintaining four meaningful player segments and strong stability.

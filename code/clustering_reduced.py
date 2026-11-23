@@ -1,7 +1,7 @@
 
 import pandas as pd
 import numpy as np
-
+from sklearn.metrics import adjusted_rand_score
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score, davies_bouldin_score
@@ -88,3 +88,24 @@ print(
     .round(2)
     .to_string()
 )
+
+print("Reduced K=4 Stability Test")
+
+random_states = [1, 7, 13, 24, 42, 99]
+
+for seed in random_states:
+    model = KMeans(
+        n_clusters=4,
+        max_iter=300,
+        random_state=seed,
+        n_init=10
+    )
+
+    new_labels = model.fit_predict(X_scaled)
+
+    ari = adjusted_rand_score(labels, new_labels)
+
+    print(
+        f"Random State: {seed} | "
+        f"Adjusted Rand Index: {ari:.4f}"
+    )

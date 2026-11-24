@@ -6,6 +6,9 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score, davies_bouldin_score
 
+import matplotlib.pyplot as plt
+from pathlib import Path
+
 # Load dataset
 df = pd.read_csv("data/processed/user_features.csv")
 
@@ -107,5 +110,41 @@ for seed in random_states:
 
     print(
         f"Random State: {seed} | "
-        f"Adjusted Rand Index: {ari:.4f}"
+        f"Adjusted Rand Index: {ari:.4f}" #round up to 4
     )
+
+#Visualise final modell
+
+cluster_sizes = df["cluster"].value_counts().sort_index()
+
+plt.figure(figsize=(8, 5))
+bars = plt.bar(
+    cluster_sizes.index.astype(str),
+    cluster_sizes.values
+)
+
+plt.xlabel("Cluster")
+plt.ylabel("Number of Users")
+plt.title("Steam Player Segments - Reduced K-Means (K=4)")
+
+for bar in bars:
+    height = bar.get_height()
+    plt.text(
+        bar.get_x() + bar.get_width() / 2,
+        height + 50,
+        f"{int(height)}",
+        ha="center"
+    )
+
+plt.ylim(0, cluster_sizes.max() * 1.12)
+plt.tight_layout()
+
+output_path = (
+    Path(__file__).resolve().parent.parent
+    / "figures"
+    / "reduced_k4_cluster_sizes.png"
+)
+
+output_path.parent.mkdir(parents=True, exist_ok=True)
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+plt.close()

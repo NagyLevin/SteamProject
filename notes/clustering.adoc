@@ -330,3 +330,15 @@ These results indicate that the model produces very similar clusters across diff
 Although the six-feature model was slightly more stable, the reduced model also showed excellent stability.
 
 I selected the Reduced Feature K-Means model (K=4) as my final model because it uses fewer features while maintaining four meaningful player segments and strong stability.
+
+=== Final Model Cluster Sizes
+
+I created a bar chart to visualize the cluster sizes of the Reduced Feature K-Means model (K=4).
+
+image::../figures/reduced_k4_cluster_sizes.png[Reduced K-Means Cluster Sizes, width=650]
+
+The largest group is Casual Players (5,518 users), representing 44.5% of the dataset.
+
+The smallest group is Large-Library Players (1,494 users), representing 12% of the users.
+
+The model produces four meaningful player segments with a more balanced distribution than the original baseline.

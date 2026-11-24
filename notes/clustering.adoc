@@ -342,3 +342,22 @@ The largest group is Casual Players (5,518 users), representing 44.5% of the dat
 The smallest group is Large-Library Players (1,494 users), representing 12% of the users.
 
 The model produces four meaningful player segments with a more balanced distribution than the original baseline.
+
+== 14. Final Model Feature Comparison
+
+I created a visualization comparing the average number of purchased games, total playtime, and play ratio across the four clusters.
+
+image::../figures/reduced_k4_feature_comparison.png[Reduced K-Means Feature Comparison, width=650]
+
+=== Evaluation
+
+The visualization highlights clear differences between the four player segments.
+
+* Cluster 0 - Large-Library Players: Own the most games and have the highest total playtime.
+* Cluster 1 - Inactive Library Owners: Have very low playtime and the lowest play ratio.
+* Cluster 2 - Casual Players: Own very few games but play almost all of them.
+* Cluster 3 - Focused Players: Own relatively few games but spend considerable time playing.
+
+These findings suggest that game ownership, total playtime, and play ratio are useful for identifying different gaming behaviors.
+
+I selected the Reduced Feature K-Means model (K=4) as my final model because it produces esaly interpretable player segments with good clustering stability.

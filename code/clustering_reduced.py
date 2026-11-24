@@ -148,3 +148,66 @@ output_path = (
 output_path.parent.mkdir(parents=True, exist_ok=True)
 plt.savefig(output_path, dpi=300, bbox_inches="tight")
 plt.close()
+
+
+
+# Compare behavioral features of users in the final model # 
+comparison_features = [
+    "games_purchased",
+    "total_playtime",
+    "play_ratio"
+]
+
+cluster_comparison = (
+    df.groupby("cluster")[comparison_features]
+    .mean()
+)
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+titles = [
+    "Average Games Purchased",
+    "Average Total Playtime",
+    "Average Play Ratio"
+]
+
+for i, feature in enumerate(comparison_features):
+    values = cluster_comparison[feature]
+
+    bars = axes[i].bar(
+        values.index.astype(str),
+        values.values
+    )
+
+    axes[i].set_title(titles[i])
+    axes[i].set_xlabel("Cluster")
+    axes[i].set_ylabel(feature.replace("_", " ").title())
+
+    if feature == "play_ratio":
+        axes[i].set_ylim(0, 1.1)
+    else:
+        axes[i].set_ylim(0, values.max() * 1.15)
+
+    for bar, value in zip(bars, values):
+        axes[i].text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height(),
+            f"{value:.2f}",
+            ha="center",
+            va="bottom"
+        )
+
+plt.suptitle("Steam Player Behavior - Reduced K-Means (K=4)")
+plt.tight_layout()
+
+output_path = (
+    Path(__file__).resolve().parent.parent
+    / "figures"
+    / "reduced_k4_feature_comparison.png"
+)
+
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+plt.savefig(output_path, dpi=300, bbox_inches="tight")
+plt.close()
+
